@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/ui/widgets/drawer/drawer_menu.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class PokedexPage extends StatelessWidget {
   const PokedexPage({Key? key}) : super(key: key);
@@ -9,69 +11,29 @@ class PokedexPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Pokedex'),
       ),
-      drawer: MediaQuery.of(context).size.width > 600
+      drawer: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
           ? const Drawer(
-        child: DrawerMenu(),
-      )
+              child: DrawerMenu(),
+            )
           : null,
       body: const Center(
         child: Text('¡Bienvenido a tu Pokedex!'),
       ),
-      bottomNavigationBar: MediaQuery.of(context).size.width <= 600
+      bottomNavigationBar: ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
           ? BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Buscar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.pets),
-            label: 'Pokémon',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
-          ),
-        ],
-      )
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Pokedex',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.pets),
+                  label: 'Capturados',
+                ),
+              ],
+            )
           : null,
     );
   }
 }
 
-class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: Text('Menú'),
-        ),
-        ListTile(
-          title: const Text('Buscar'),
-          onTap: () {
-            // TODO: Implementar navegación para buscar
-          },
-        ),
-        ListTile(
-          title: const Text('Pokémon'),
-          onTap: () {
-            // TODO: Implementar navegación para lista de Pokémon
-          },
-        ),
-        ListTile(
-          title: const Text('Perfil'),
-          onTap: () {
-            // TODO: Implementar navegación para perfil
-          },
-        ),
-      ],
-    );
-  }
-}
