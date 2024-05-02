@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../log/log.dart';
+import 'package:flutter_pokedex/common/logging/log.dart';
 
 ///Instance of [NavigationService].
 ///
