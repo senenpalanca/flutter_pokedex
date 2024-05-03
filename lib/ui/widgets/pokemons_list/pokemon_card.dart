@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
+import 'package:flutter_pokedex/common/utils/utils.dart';
+import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_type_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
   final Pokemon pokemon;
+
   const PokemonCard({super.key, required this.pokemon});
 
   @override
@@ -13,7 +16,8 @@ class PokemonCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, Routes.POKEMON_DETAIL_PAGE, arguments: pokemon);
+          Navigator.pushNamed(
+              context, Routes.POKEMON_DETAIL_PAGE, arguments: pokemon);
         },
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -46,24 +50,7 @@ class PokemonCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               for (var type in pokemon.types!)
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 4),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 2, horizontal: 8),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: getColorType(type.type?.name ?? "")!.withOpacity(0.7),
-                                    ),
-                                    child: Text(
-                                      type.type?.name ?? "",
-                                      style: const TextStyle(
-                                          fontSize: Dimens.textSizeBodyTiny,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                ),
+                                PokemonTypeCard(type: type,)
                             ],
                           ),
                         ],
@@ -108,64 +95,4 @@ class PokemonCard extends StatelessWidget {
     );
   }
 
-  Color? getColorType(String type) {
-    switch (type) {
-      case 'normal':
-        return Colors.brown[400];
-
-      case 'fire':
-        return Colors.red;
-
-      case 'water':
-        return Colors.blue;
-
-      case 'grass':
-        return Colors.green;
-
-      case 'electric':
-        return Colors.amber;
-
-      case 'ice':
-        return Colors.cyanAccent[400];
-
-      case 'fighting':
-        return Colors.orange;
-
-      case 'poison':
-        return Colors.purple;
-
-      case 'ground':
-        return Colors.orange[300];
-
-      case 'flying':
-        return Colors.indigo[200];
-
-      case 'psychic':
-        return Colors.pink;
-
-      case 'bug':
-        return Colors.lightGreen[500];
-
-      case 'rock':
-        return Colors.grey;
-
-      case 'ghost':
-        return Colors.indigo[400];
-
-      case 'dark':
-        return Colors.brown;
-
-      case 'dragon':
-        return Colors.indigo[800];
-
-      case 'steel':
-        return Colors.blueGrey;
-
-      case 'fairy':
-        return Colors.pinkAccent[100];
-
-      default:
-        return Colors.grey;
-    }
-  }
 }
