@@ -17,6 +17,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
 
       drawer: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
           ? Drawer(
