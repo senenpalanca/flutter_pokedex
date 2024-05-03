@@ -15,7 +15,7 @@ class Pokedex extends StatelessWidget {
     return MaterialApp(
       title: 'Pokédex Code Challenge',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent, secondary: Colors.deepOrange),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red, secondary: Colors.deepOrange),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,

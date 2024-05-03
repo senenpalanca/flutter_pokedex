@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/widgets/drawer/drawer_menu.dart';
-import 'package:responsive_framework/responsive_framework.dart';
+import 'package:flutter_pokedex/common/styles/colors.dart';
+
+import '../../common/styles/dimensions.dart';
 
 class PokedexPage extends StatelessWidget {
   const PokedexPage({Key? key}) : super(key: key);
@@ -8,32 +9,44 @@ class PokedexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pokedex'),
-      ),
-      drawer: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
-          ? const Drawer(
-              child: DrawerMenu(),
-            )
-          : null,
-      body: const Center(
-        child: Text('¡Bienvenido a tu Pokedex!'),
-      ),
-      bottomNavigationBar: ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
-          ? BottomNavigationBar(
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Pokedex',
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Pokedex",
+                  style: TextStyle(
+                      fontSize: Dimens.textSizeBigTitle,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.title)),
+              const Text(
+                "Pokemons en la región de Kanto",
+                style: TextStyle(
+                    fontSize: Dimens.textSizeBodySmall,
+                    color: AppColors.subtitle),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  filled: true,
+                  hintText: "Buscar pokemon",
+                  fillColor: Colors.grey[200],
+                  suffixIcon: const Icon(Icons.search),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.pets),
-                  label: 'Capturados',
-                ),
-              ],
-            )
-          : null,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
-

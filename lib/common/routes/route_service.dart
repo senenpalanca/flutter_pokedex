@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/ui/pages/pokedex_page.dart';
+import 'package:flutter_pokedex/ui/pages/main_page.dart';
 
 
 ///
@@ -21,7 +21,7 @@ abstract class RouteServices {
 
   ///--> Add your application routes here!
   static Map<String, Widget Function(BuildContext context)> routes = {
-    Routes.INITIAL: (context) => const PokedexPage(),
+    Routes.INITIAL: (context) => const MainPage(),
   };
 
   ///  add routing animation here!!

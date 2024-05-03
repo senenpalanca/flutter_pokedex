@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
-  const DrawerMenu({Key? key}) : super(key: key);
+  final Function(int) onTabSelected;
+
+  const DrawerMenu({Key? key, required this.onTabSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +19,13 @@ class DrawerMenu extends StatelessWidget {
         ListTile(
           title: const Text('Pokédex'),
           onTap: () {
+            onTabSelected(0);
           },
         ),
         ListTile(
           title: const Text('Capturados'),
           onTap: () {
+            onTabSelected(1);
           },
         ),
 
