@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/common/extensions/extensions.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
 import 'package:flutter_pokedex/common/utils/utils.dart';
@@ -42,7 +43,7 @@ class PokemonCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(pokemon.name ?? "",
+                          Text(pokemon.name?.capitalize() ?? "",
                               style: const TextStyle(
                                   fontSize: Dimens.textSizeBody,
                                   color: Colors.white)),

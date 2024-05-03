@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/common/styles/dimensions.dart';
 
 class DrawerMenu extends StatelessWidget {
   final Function(int) onTabSelected;
@@ -10,11 +12,28 @@ class DrawerMenu extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: <Widget>[
-        const DrawerHeader(
+        DrawerHeader(
           decoration: BoxDecoration(
             color: Colors.blue,
           ),
-          child: Text('Menú'),
+          margin: EdgeInsets.zero,
+          padding: EdgeInsets.zero,
+          child: Stack(
+            children: [
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Image.asset("assets/images/trainer.png")),
+              const Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 30.0),
+                    child: Text('Menú',
+                        style: TextStyle(
+                            fontSize: Dimens.textSizeBigTitle,
+                            color: Colors.white)),
+                  )),
+            ],
+          ),
         ),
         ListTile(
           title: const Text('Pokédex'),
@@ -28,7 +47,6 @@ class DrawerMenu extends StatelessWidget {
             onTabSelected(1);
           },
         ),
-
       ],
     );
   }

@@ -34,7 +34,6 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
           }
           return SingleChildScrollView(
             child: Wrap(
-
               children: [
                 for (var pokemon in snapshot.data!)
                   PokemonCard(pokemon: pokemon!),

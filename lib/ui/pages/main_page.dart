@@ -11,47 +11,48 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-
   int _selectedTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-
       drawer: ResponsiveBreakpoints.of(context).largerThan(MOBILE)
           ? Drawer(
+              elevation: 0,
+              shape:
+                  const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
               child: DrawerMenu(
                 onTabSelected: (index) {
-                   setState(() {
-                     _selectedTabIndex = index;
-                   });
+                  setState(() {
+                    _selectedTabIndex = index;
+                  });
                 },
               ),
             )
           : null,
       body: _buildBody(),
-      bottomNavigationBar: ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
-          ? BottomNavigationBar(
-              currentIndex: _selectedTabIndex,
-              onTap: (index) {
-                setState(() {
-                  _selectedTabIndex = index;
-                });
-              },
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.search),
-                  label: 'Pokedex',
-
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.pets),
-                  label: 'Capturados',
-                ),
-              ],
-            )
-          : null,
+      bottomNavigationBar:
+          ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
+              ? BottomNavigationBar(
+                  currentIndex: _selectedTabIndex,
+                  onTap: (index) {
+                    setState(() {
+                      _selectedTabIndex = index;
+                    });
+                  },
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.search),
+                      label: 'Pokedex',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.pets),
+                      label: 'Capturados',
+                    ),
+                  ],
+                )
+              : null,
     );
   }
 
@@ -59,7 +60,7 @@ class _MainPageState extends State<MainPage> {
     return IndexedStack(
       index: _selectedTabIndex,
       children: [
-        PokedexPage(),
+        const PokedexPage(),
         // Contenido de la segunda pestaña
         Container(
           color: Colors.white,
@@ -74,4 +75,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-

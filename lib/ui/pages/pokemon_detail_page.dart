@@ -1,12 +1,9 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_pokedex/common/extensions/extensions.dart';
 import 'package:flutter_pokedex/common/styles/colors.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
 import 'package:flutter_pokedex/common/utils/utils.dart';
+import 'package:flutter_pokedex/ui/widgets/pokemon_details/pokemon_detail_item.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_type_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -72,54 +69,44 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                     ),
                   ),
                 ),
+                //ID In bottom left
               ],
             ),
           ),
         ),
 
-         Padding(
-          padding: EdgeInsets.all(20),
+        Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text( //fIRST IN Uppercase
-                  widget.pokemon.name!.capitalize(),
+              Text("#${widget.pokemon.id} ${widget.pokemon.name?.capitalize()}",
                   style: const TextStyle(
                       fontSize: Dimens.textSizeBigTitle,
                       fontWeight: FontWeight.bold,
                       color: AppColors.title)),
+
               Row(
                 children: [
                   for (var type in widget.pokemon.types!)
-                    PokemonTypeCard(type: type,)
+                    PokemonTypeCard(
+                      type: type,
+                    )
                 ],
               ),
+
               const SizedBox(
                 height: 12,
               ),
-
+             PokemonDetailItem(title: "Altura", value: "${widget.pokemon.height.toString()} unidades"),
+             PokemonDetailItem(title: "Peso", value: "${widget.pokemon.weight.toString()} unidades"),
               //All the properties of the pokemon
               for (var stat in widget.pokemon.stats!)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        stat.stat?.name ?? "",
-                        style: const TextStyle(
-                            fontSize: Dimens.textSizeBodySmall,
-                            color: AppColors.subtitle),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        stat.baseStat.toString(),
-                        style: const TextStyle(
-                            fontSize: Dimens.textSizeBodySmall,
-                            color: AppColors.subtitle),
-                      ),
-                    ],
-                  ),
-                ),
+                PokemonDetailItem(
+                  title: stat.stat?.name?.capitalize() ?? "",
+                  value: stat.baseStat.toString(),
+                )
+
             ],
           ),
         ),
