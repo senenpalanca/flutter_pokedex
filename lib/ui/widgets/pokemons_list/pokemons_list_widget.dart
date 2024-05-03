@@ -5,7 +5,8 @@ import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
 class PokemonsListWidget extends StatefulWidget {
-  const PokemonsListWidget({super.key});
+  final String searchText;
+  const PokemonsListWidget({super.key, required this.searchText});
 
   @override
   State<PokemonsListWidget> createState() => _PokemonsListWidgetState();
@@ -19,7 +20,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
       child: FutureBuilder<List<Pokemon?>>(
-        future: locator<PokemonService>().getPokemonList(),
+        future: locator<PokemonService>().getPokemonList(widget.searchText),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

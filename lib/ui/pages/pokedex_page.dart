@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/styles/colors.dart';
+import 'package:flutter_pokedex/common/utils/debouncer.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemons_list_widget.dart';
 
 import '../../common/styles/dimensions.dart';
 
-class PokedexPage extends StatelessWidget {
+class PokedexPage extends StatefulWidget {
   const PokedexPage({Key? key}) : super(key: key);
+
+  @override
+  State<PokedexPage> createState() => _PokedexPageState();
+}
+
+class _PokedexPageState extends State<PokedexPage> {
+
+  String _searchText =  "";
+  final _debouncer = Debouncer(milliseconds: 1000);
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +56,14 @@ class PokedexPage extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                   ),
+                  onChanged: (value) async {
+                    _debouncer.run(() async  => setState(() {
+                      _searchText = value;
+                    }));
+                  },
                 ),
               ),
-              const Expanded(child: PokemonsListWidget()),
+              Expanded(child: PokemonsListWidget(searchText: _searchText,)),
             ],
           ),
         ),
