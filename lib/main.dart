@@ -3,15 +3,19 @@ import 'package:flutter_pokedex/common/navigation/navigation_service.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'common/services/service_locator.dart';
+
 void main() {
-  runApp(const Pokedex());
+  runApp(const FlutterPokedex());
 }
 
-class Pokedex extends StatelessWidget {
-  const Pokedex({super.key});
+class FlutterPokedex extends StatelessWidget {
+  const FlutterPokedex({super.key});
 
   @override
   Widget build(BuildContext context) {
+    setupLocator();
+
     return MaterialApp(
       title: 'Pokédex Code Challenge',
       theme: ThemeData(
