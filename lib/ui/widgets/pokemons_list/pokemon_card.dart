@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
@@ -10,52 +11,99 @@ class PokemonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      child:  Stack(
-        children: [
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, Routes.POKEMON_DETAIL_PAGE, arguments: pokemon);
+        },
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Stack(
+          children: [
+            Container(
+                height: 130,
+                width: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
 
-          Container(
-              height: 100,
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.grey.withOpacity(0.5), width: 1),
-                color: getColorType(pokemon.types?.first.type?.name ?? "")!.withAlpha(150),),
-              child: Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  color: getColorType(pokemon.types?.first.type?.name ?? "")!
+                      .withAlpha(150),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 12.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(pokemon.name ?? "",
+                              style: const TextStyle(
+                                  fontSize: Dimens.textSizeBody,
+                                  color: Colors.white)),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (var type in pokemon.types!)
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 4),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 8),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: getColorType(type.type?.name ?? "")!.withOpacity(0.7),
+                                    ),
+                                    child: Text(
+                                      type.type?.name ?? "",
+                                      style: const TextStyle(
+                                          fontSize: Dimens.textSizeBodyTiny,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: 100,
+                height: 100,
+                child: Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(pokemon.name ?? "",
-                            style: const TextStyle(
-                                fontSize: Dimens.textSizeBody,
-                                color: Colors.white)),
-                      ],
+                    Center(
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white.withOpacity(0.3),
+                        ),
+                      ),
                     ),
-                    /* Image.network(
-                              pokemon.sprites?.frontDefault ?? "",
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),*/
+                    Hero(
+                      tag: pokemon.id ?? "",
+                      child: Image.network(
+                        pokemon.sprites?.frontDefault ?? "",
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ],
                 ),
-              )),
-          Positioned(
-            right: 0,
-            bottom: 0,
-            child: Image.network(
-              pokemon.sprites?.frontDefault ?? "",
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          )
-
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
