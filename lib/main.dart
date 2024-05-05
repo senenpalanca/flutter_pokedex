@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/navigation/navigation_service.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
+import 'package:flutter_pokedex/common/utils/utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'common/services/service_locator.dart';
 
-void main() {
+void main() async {
+  setupLocator();
+  await initFactories();
   runApp(const FlutterPokedex());
 }
 
-class FlutterPokedex extends StatelessWidget {
+class FlutterPokedex extends StatefulWidget {
   const FlutterPokedex({super.key});
 
   @override
+  State<FlutterPokedex> createState() => _FlutterPokedexState();
+}
+
+class _FlutterPokedexState extends State<FlutterPokedex>  with WidgetsBindingObserver {
+  @override
   Widget build(BuildContext context) {
-    setupLocator();
+
 
     return MaterialApp(
       title: 'Pokédex Code Challenge',
@@ -39,5 +47,14 @@ class FlutterPokedex extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+
+     if (state == AppLifecycleState.detached) {
+      closeFactories();
+    }
   }
 }

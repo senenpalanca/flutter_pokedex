@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/common/globals/globals.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 
 /// Returns the pokemon related color given a type
 ///
@@ -63,3 +66,13 @@ Color? getColorType(String type) {
   }
 }
 
+initFactories() async {
+  await Hive.initFlutter();
+  await pokemonsFactory.init();
+  print('[Utils] - Init factories completed');
+}
+
+closeFactories() async {
+  await pokemonsFactory.finish();
+  print('[Utils] - Close factories completed');
+}

@@ -15,16 +15,20 @@ abstract class FactoryBase<E> {
 
   /// Initiates the several [box]. This should be done only once.
   Future<void> init() async {
-    if (!Hive.isBoxOpen(this.boxName)) {
-      this.box = await Hive.openBox<E>(this.boxName);
-    } else {
-      this.box = Hive.box(this.boxName);
-    }
+    try {
+      if (!Hive.isBoxOpen(this.boxName)) {
+        this.box = await Hive.openBox<E>(this.boxName);
+      } else {
+        this.box = Hive.box(this.boxName);
+      }
 
-    if (!Hive.isBoxOpen(this.metadataBoxName)) {
-      this.metadataBox = await Hive.openBox<dynamic>(this.metadataBoxName);
-    } else {
-      this.metadataBox = Hive.box(this.metadataBoxName);
+      if (!Hive.isBoxOpen(this.metadataBoxName)) {
+        this.metadataBox = await Hive.openBox<dynamic>(this.metadataBoxName);
+      } else {
+        this.metadataBox = Hive.box(this.metadataBoxName);
+      }
+    }catch(e){
+      print(e);
     }
   }
 
