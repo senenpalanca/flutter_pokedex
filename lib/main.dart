@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pokedex/common/navigation/navigation_service.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:flutter_pokedex/common/utils/utils.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'common/globals/globals.dart';
 import 'common/services/service_locator.dart';
 
 void main() async {
@@ -36,7 +36,7 @@ class _FlutterPokedexState extends State<FlutterPokedex>  with WidgetsBindingObs
       // onGenerateRoute: (settings) => Routes.onGenerateRoute(settings,context),
       initialRoute: RouteServices.STARTING_POINT,
       routes: RouteServices.routes,
-      navigatorKey: navigationService.navigationKey,
+      navigatorKey: navigatorKey,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,
         breakpoints: [

@@ -17,7 +17,7 @@ class PokemonWrapperAdapter extends TypeAdapter<PokemonWrapper> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PokemonWrapper(
-      serializedPokemon: (fields[0] as Map).cast<String, dynamic>(),
+      serializedPokemon: fields[0] as String,
       captured: fields[1] as bool,
     );
   }

@@ -105,8 +105,8 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                 PokemonDetailItem(
                   title: stat.stat?.name?.capitalize() ?? "",
                   value: stat.baseStat.toString(),
-                )
-
+                ),
+              TextButton(onPressed: (){}, child: Text("Capturar"))
             ],
           ),
         ),
