@@ -8,10 +8,10 @@ part 'pokemon_wrapper.g.dart';
 class PokemonWrapper {
 
   @HiveField(0)
-  final Pokemon pokemon;
+  final Map<String, dynamic> serializedPokemon;
 
   @HiveField(1)
   final bool captured;
 
-  PokemonWrapper({required this.pokemon, required this.captured});
+  PokemonWrapper({required this.serializedPokemon, required this.captured});
 }

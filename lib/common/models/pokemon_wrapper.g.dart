@@ -17,7 +17,7 @@ class PokemonWrapperAdapter extends TypeAdapter<PokemonWrapper> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PokemonWrapper(
-      pokemon: fields[0] as Pokemon,
+      serializedPokemon: (fields[0] as Map).cast<String, dynamic>(),
       captured: fields[1] as bool,
     );
   }
@@ -27,7 +27,7 @@ class PokemonWrapperAdapter extends TypeAdapter<PokemonWrapper> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.pokemon)
+      ..write(obj.serializedPokemon)
       ..writeByte(1)
       ..write(obj.captured);
   }

@@ -18,14 +18,15 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
   Future<List<Pokemon?>> getPokemons(String searchText) async {
     try {
       List<PokemonWrapper> pokemons = box.values.toList();
-      print("aaa");
+
+      //save into factory
       if (pokemons.isEmpty) {
         List<Pokemon?> pokemonsList =
         await locator<PokemonService>().getPokemonList(searchText);
-        print("bbb");
-        //Create a pokemonWrapper for each pokemon, and save it to pokemons
+
+        //Create a pokemonWrapper for each pokemon, and save it to persistent storage
         pokemons = pokemonsList
-            .map((e) => PokemonWrapper(pokemon: e!, captured: false))
+            .map((e) => PokemonWrapper(serializedPokemon: e!.toJson(), captured: false))
             .toList();
 
         updateLocalLastUpdate();
@@ -36,18 +37,21 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
         }
       }
 
+      //Unwrap pokemons list
+      List<Pokemon?> returnList = pokemons.map((e) => Pokemon.fromJson(e.serializedPokemon)).toList();
+
       if (searchText.isNotEmpty) {
         //Filter by searchText
-        pokemons = pokemons
+        returnList = returnList
             .where(
                 (element) =>
-            element.pokemon.name?.contains(searchText) ?? false)
+            element?.name?.contains(searchText) ?? false)
             .toList();
       }
-      //Unwrap pokemons
-      List<Pokemon?> pokemonsList = pokemons.map((e) => e.pokemon).toList();
 
-      return pokemonsList;
+      return returnList;
+
+
     }catch(e){
       print(e);
       return [];

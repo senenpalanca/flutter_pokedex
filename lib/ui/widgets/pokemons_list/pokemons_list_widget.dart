@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/globals/globals.dart';
-import 'package:flutter_pokedex/common/services/pokemon_service.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
