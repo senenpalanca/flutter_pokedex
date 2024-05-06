@@ -11,14 +11,25 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 class PokemonDetailPage extends StatefulWidget {
   final Pokemon pokemon;
-
-  const PokemonDetailPage({super.key, required this.pokemon});
+  final bool captured;
+  const PokemonDetailPage(
+      {super.key, required this.pokemon, required this.captured});
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage> {
+  late bool _captured;
+  late bool _isLoading;
+
+  @override
+  void initState() {
+    _captured = widget.captured;
+    _isLoading = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Use widget.pokemon to display the pokemon details
@@ -99,19 +110,48 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
               const SizedBox(
                 height: 12,
               ),
-             PokemonDetailItem(title: "Altura", value: "${widget.pokemon.height.toString()} unidades"),
-             PokemonDetailItem(title: "Peso", value: "${widget.pokemon.weight.toString()} unidades"),
+              PokemonDetailItem(
+                  title: "Altura",
+                  value: "${widget.pokemon.height.toString()} unidades"),
+              PokemonDetailItem(
+                  title: "Peso",
+                  value: "${widget.pokemon.weight.toString()} unidades"),
               //All the properties of the pokemon
               for (var stat in widget.pokemon.stats!)
                 PokemonDetailItem(
                   title: stat.stat?.name?.capitalize() ?? "",
                   value: stat.baseStat.toString(),
                 ),
-              TextButton(onPressed: () => pokemonsFactory.capturePokemon(widget.pokemon.id!), child: Text("Capturar"))
+              TextButton(
+                  onPressed: onClickCaptureButton(),
+                  child: Text(_captured ? "Liberar" : "Capturar"))
             ],
           ),
         ),
       ],
     );
+  }
+
+  onClickCaptureButton() {
+    if (_isLoading) return;
+    setState(() {
+      _isLoading = true;
+    });
+    if (_captured) {
+      pokemonsFactory.releasePokemon(widget.pokemon.id!);
+      showSnackbar(context, "Pokemon liberado");
+      setState(() {
+        _captured = false;
+      });
+    } else {
+      pokemonsFactory.capturePokemon(widget.pokemon.id!);
+      showSnackbar(context, "Pokemon capturado");
+      setState(() {
+        _captured = true;
+      });
+    }
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

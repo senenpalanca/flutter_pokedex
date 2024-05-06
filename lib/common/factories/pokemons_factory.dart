@@ -67,9 +67,19 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
     }
   }
 
+  /// Release pokemon
+  Future<void> releasePokemon(int id) async {
+    PokemonWrapper? pokemon = box.get(id);
+    if (pokemon != null) {
+      pokemon.captured = false;
+      box.put(id, pokemon);
+    }
+  }
+
   @override
   Future<void> checkCacheValidity() {
     // TODO: implement checkCacheValidity
     throw UnimplementedError();
   }
+
 }
