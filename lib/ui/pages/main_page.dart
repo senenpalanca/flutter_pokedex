@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pokedex/ui/pages/captured_page.dart';
 import 'package:flutter_pokedex/ui/pages/pokedex_page.dart';
 import 'package:flutter_pokedex/ui/widgets/drawer/drawer_menu.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -59,18 +60,9 @@ class _MainPageState extends State<MainPage> {
   _buildBody() {
     return IndexedStack(
       index: _selectedTabIndex,
-      children: [
-        const PokedexPage(),
-        // Contenido de la segunda pestaña
-        Container(
-          color: Colors.white,
-          child: const Center(
-            child: Text(
-              'Contenido de los Pokémon capturados',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
-        ),
+      children: const [
+         PokedexPage(),
+         CapturedPage(),
       ],
     );
   }

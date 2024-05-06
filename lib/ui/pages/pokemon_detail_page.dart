@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/extensions/extensions.dart';
+import 'package:flutter_pokedex/common/globals/globals.dart';
 import 'package:flutter_pokedex/common/styles/colors.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
 import 'package:flutter_pokedex/common/utils/utils.dart';
@@ -106,7 +107,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                   title: stat.stat?.name?.capitalize() ?? "",
                   value: stat.baseStat.toString(),
                 ),
-              TextButton(onPressed: (){}, child: Text("Capturar"))
+              TextButton(onPressed: () => pokemonsFactory.capturePokemon(widget.pokemon.id!), child: Text("Capturar"))
             ],
           ),
         ),
