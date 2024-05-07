@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
@@ -14,4 +16,9 @@ class PokemonWrapper {
   bool captured;
 
   PokemonWrapper({required this.serializedPokemon, required this.captured});
+
+  //get pokemon
+  Pokemon getPokemon() {
+    return Pokemon.fromJson(jsonDecode(serializedPokemon));
+  }
 }

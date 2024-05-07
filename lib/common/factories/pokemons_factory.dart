@@ -14,23 +14,27 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
 
   PokemonsFactory() : super(PokemonWrapperAdapter());
 
-  /// Returns a list of [Pokemons] r.
+  /// Returns a list of [Pokemons].
   ///
   /// If it is not in local database, it will save it.
-  Future<List<Pokemon?>> getPokemons(String searchText, [bool doPrefetch = true]) async {
+  /// TODO: Implement pagination
+  Future<List<Pokemon?>> getPokemons([bool doPrefetch = true]) async {
     try {
       List<PokemonWrapper> pokemons = box.values.toList();
       //save into factory
       if (pokemons.isEmpty) {
         List<Pokemon?> pokemonsList =
-        await locator<PokemonService>().getPokemonList(searchText);
+        await locator<PokemonService>().getPokemonListFirstPage();
+
         //Create a pokemonWrapper for each pokemon, and save it to persistent storage
         pokemons = pokemonsList
             .map((e) => PokemonWrapper(serializedPokemon: jsonEncode(e!.toJson()), captured: false))
             .toList();
 
+        //Update local last update time to use it to invalidate cache (not needed for this project yet)
         updateLocalLastUpdate();
-        if (pokemons.isNotEmpty) {
+
+        if (pokemons.isNotEmpty ) {
           Map<dynamic, PokemonWrapper> pokemonsMap = { for (var e in pokemons) jsonDecode( e.serializedPokemon)['id'] : e };
           if (box.isOpen) box.putAll(pokemonsMap);
         }
@@ -39,24 +43,42 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
       //Unwrap pokemons list
       List<Pokemon?> returnList = pokemons.map((e) => Pokemon.fromJson(jsonDecode(e.serializedPokemon)  as Map<String, dynamic>)).toList();
 
-      if (searchText.isNotEmpty) {
-        //Filter by searchText
-        returnList = returnList
-            .where(
-                (element) =>
-            element?.name?.contains(searchText) ?? false)
-            .toList();
+      if(doPrefetch){
+        //Prefetch next page
+        getAllPokemons();
       }
 
       return returnList;
 
 
     }catch(e){
-      print(e);
-      return [];
+      print("[PokemonsFactory] Error: $e");
+      return <Pokemon?>[];
     }
 
   }
+
+  /// Saves All [Pokemons] into Hive.
+  ///
+  ///
+  Future<void> getAllPokemons() async {
+    List<Pokemon?> pokemonsList =
+        await locator<PokemonService>().getAllPokemons();
+
+    //Create a pokemonWrapper for each pokemon, and save it to persistent storage
+    List<PokemonWrapper> pokemons = pokemonsList
+        .map((e) => PokemonWrapper(serializedPokemon: jsonEncode(e!.toJson()), captured: false))
+        .toList();
+
+    //Update local last update time to use it to invalidate cache (not needed for this project yet)
+    updateLocalLastUpdate();
+
+    if (pokemons.isNotEmpty ) {
+      Map<dynamic, PokemonWrapper> pokemonsMap = { for (var e in pokemons) jsonDecode( e.serializedPokemon)['id'] : e };
+      if (box.isOpen) box.putAll(pokemonsMap);
+    }
+  }
+
 
   /// Capture pokemon
   Future<void> capturePokemon(int id) async {

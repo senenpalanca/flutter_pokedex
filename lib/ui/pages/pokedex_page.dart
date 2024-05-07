@@ -23,7 +23,7 @@ class _PokedexPageState extends State<PokedexPage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +63,8 @@ class _PokedexPageState extends State<PokedexPage> {
                   },
                 ),
               ),
-              Expanded(child: PokemonsListWidget(searchText: _searchText,)),
+              Expanded(child: PokemonsListWidget(
+                searchText: _searchText,)),
             ],
           ),
         ),

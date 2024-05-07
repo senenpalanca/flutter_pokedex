@@ -9,11 +9,16 @@ import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_type_card.dart'
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class PokemonDetailPage extends StatefulWidget {
+class PokemonArguments {
   final Pokemon pokemon;
   final bool captured;
+  PokemonArguments(this.pokemon, this.captured);
+}
+
+class PokemonDetailPage extends StatefulWidget {
+  final PokemonArguments pokemonArgs;
   const PokemonDetailPage(
-      {super.key, required this.pokemon, required this.captured});
+      {super.key, required this.pokemonArgs});
 
   @override
   State<PokemonDetailPage> createState() => _PokemonDetailPageState();
@@ -25,7 +30,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
 
   @override
   void initState() {
-    _captured = widget.captured;
+    _captured = widget.pokemonArgs.captured;
     _isLoading = false;
     super.initState();
   }
@@ -52,7 +57,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                           bottomRight: Radius.circular(20),
                         )
                       : null,
-              color: getColorType(widget.pokemon.types?.first.type?.name ?? "")!
+              color: getColorType(widget.pokemonArgs.pokemon.types?.first.type?.name ?? "")!
                   .withOpacity(0.4)),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -71,14 +76,10 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Hero(
-                    tag: widget.pokemon.id ?? "",
-                    child: Image.network(
-                      widget.pokemon.sprites?.frontDefault ?? "",
-                      width: 160,
-                      height: 160,
-                      fit: BoxFit.cover,
-                    ),
+                  child: Image.network(widget.pokemonArgs.pokemon.sprites?.frontDefault ?? "",
+                    width: 160,
+                    height: 160,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 //ID In bottom left
@@ -92,7 +93,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("#${widget.pokemon.id} ${widget.pokemon.name?.capitalize()}",
+              Text("#${widget.pokemonArgs.pokemon.id} ${widget.pokemonArgs.pokemon.name?.capitalize()}",
                   style: const TextStyle(
                       fontSize: Dimens.textSizeBigTitle,
                       fontWeight: FontWeight.bold,
@@ -100,7 +101,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
 
               Row(
                 children: [
-                  for (var type in widget.pokemon.types!)
+                  for (var type in widget.pokemonArgs.pokemon.types!)
                     PokemonTypeCard(
                       type: type,
                     )
@@ -112,18 +113,18 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
               ),
               PokemonDetailItem(
                   title: "Altura",
-                  value: "${widget.pokemon.height.toString()} unidades"),
+                  value: "${widget.pokemonArgs.pokemon.height.toString()} unidades"),
               PokemonDetailItem(
                   title: "Peso",
-                  value: "${widget.pokemon.weight.toString()} unidades"),
+                  value: "${widget.pokemonArgs.pokemon.weight.toString()} unidades"),
               //All the properties of the pokemon
-              for (var stat in widget.pokemon.stats!)
+              for (var stat in widget.pokemonArgs.pokemon.stats!)
                 PokemonDetailItem(
                   title: stat.stat?.name?.capitalize() ?? "",
-                  value: stat.baseStat.toString(),
-                ),
+                  value:  "${stat.baseStat.toString()} puntos"),
+
               TextButton(
-                  onPressed: onClickCaptureButton(),
+                  onPressed: onClickCaptureButton,
                   child: Text(_captured ? "Liberar" : "Capturar"))
             ],
           ),
@@ -138,13 +139,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
       _isLoading = true;
     });
     if (_captured) {
-      pokemonsFactory.releasePokemon(widget.pokemon.id!);
+      pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(context, "Pokemon liberado");
       setState(() {
         _captured = false;
       });
     } else {
-      pokemonsFactory.capturePokemon(widget.pokemon.id!);
+      pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(context, "Pokemon capturado");
       setState(() {
         _captured = true;

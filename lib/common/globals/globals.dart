@@ -6,3 +6,7 @@ final PokemonsFactory pokemonsFactory = PokemonsFactory();
 
 // Global navigator
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+const BIG_DESKTOP = 'BIG_DESKTOP';
+
+const limitPage = 151;

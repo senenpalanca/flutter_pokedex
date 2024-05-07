@@ -28,7 +28,7 @@ abstract class RouteServices {
   static Map<String, Widget Function(BuildContext context)> routes = {
     Routes.INITIAL: (context) => const MainPage(),
     //Create a detail page with arguments
-    Routes.POKEMON_DETAIL_PAGE: (context) => PokemonDetailPage(pokemon: ModalRoute.of(context)!.settings.arguments as Pokemon, captured: false),
+    Routes.POKEMON_DETAIL_PAGE: (context) => PokemonDetailPage(pokemonArgs: ModalRoute.of(context)!.settings.arguments as PokemonArguments),
     Routes.CAPTURED_POKEMON_PAGE: (context) => CapturedPage(),
   };
 

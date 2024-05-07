@@ -1,24 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/extensions/extensions.dart';
+import 'package:flutter_pokedex/common/models/pokemon_wrapper.dart';
 import 'package:flutter_pokedex/common/routes/route_service.dart';
 import 'package:flutter_pokedex/common/styles/dimensions.dart';
 import 'package:flutter_pokedex/common/utils/utils.dart';
+import 'package:flutter_pokedex/ui/pages/pokemon_detail_page.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_type_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
 class PokemonCard extends StatelessWidget {
-  final Pokemon pokemon;
-
-  const PokemonCard({super.key, required this.pokemon});
+  final PokemonWrapper pokemonWrapper;
+  const PokemonCard({super.key, required this.pokemonWrapper});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
       child: InkWell(
         onTap: () {
           Navigator.pushNamed(
-              context, Routes.POKEMON_DETAIL_PAGE, arguments: pokemon);
+              context, Routes.POKEMON_DETAIL_PAGE, arguments: PokemonArguments(pokemonWrapper.getPokemon(), false));
         },
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -26,12 +29,12 @@ class PokemonCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-                height: 130,
-                width: 200,
+                //height: 130,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
 
-                  color: getColorType(pokemon.types?.first.type?.name ?? "")!
+                  color: getColorType(pokemonWrapper.getPokemon().types?.first.type?.name ?? "")!
                       .withAlpha(150),
                 ),
                 child: Padding(
@@ -43,14 +46,14 @@ class PokemonCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(pokemon.name?.capitalize() ?? "",
+                          Text(pokemonWrapper.getPokemon().name?.capitalize() ?? "",
                               style: const TextStyle(
                                   fontSize: Dimens.textSizeBody,
                                   color: Colors.white)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              for (var type in pokemon.types!)
+                              for (var type in pokemonWrapper.getPokemon().types!)
                                 PokemonTypeCard(type: type,)
                             ],
                           ),
@@ -77,14 +80,11 @@ class PokemonCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Hero(
-                      tag: pokemon.id ?? "",
-                      child: Image.network(
-                        pokemon.sprites?.frontDefault ?? "",
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
+                    Image.network(
+                      pokemonWrapper.getPokemon().sprites?.frontDefault ?? "",
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
                     ),
                   ],
                 ),
