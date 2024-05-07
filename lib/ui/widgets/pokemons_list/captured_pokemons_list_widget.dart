@@ -40,7 +40,7 @@ class _CapturedPokemonsListWidgetState
                 crossAxisCount: crossAxisCount,
                 childAspectRatio: 200 / 170,
               ),
-              //itemCount: pokemons.length +  (limitPage > pokemons.length ? 1 : 0),
+              itemCount: pokemons.length +  (limitPage > pokemons.length ? 1 : 0),
               itemBuilder: (context, index) {
                 if(index == pokemons.length && limitPage > pokemons.length) {
                   return const Center(child: CircularProgressIndicator(),);

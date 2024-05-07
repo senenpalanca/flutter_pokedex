@@ -32,8 +32,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
   @override
   void didUpdateWidget(covariant PokemonsListWidget oldWidget) {
     if (oldWidget.searchText != widget.searchText) {
-      setState(() {
-      });
+      setState(() {});
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -50,39 +49,49 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
                 box: pokemonsFactory.box,
                 builder: (box) {
                   final pokemons = box.values.toList();
-                  if(widget.searchText.isNotEmpty) {
-                    pokemons.removeWhere((element) => !element.serializedPokemon.contains(widget.searchText));
-                  }
+
                   if (pokemons.isNotEmpty) {
+                    var serializedPokemons = pokemons
+                        .map((e) => Pokemon.fromJson(jsonDecode(e!.serializedPokemon)))
+                        .toList();
+
+                    if(widget.searchText.isNotEmpty) {
+                      serializedPokemons = serializedPokemons.where((element) => element.name!.contains(widget.searchText)).toList();
+                    }
                     //Use Breakpoints to set crossAxisCount
-                    int crossAxisCount = ResponsiveBreakpoints.of(context).smallerOrEqualTo(TABLET) ? 2 : ResponsiveBreakpoints.of(context).smallerOrEqualTo(DESKTOP) ? 3 : ResponsiveBreakpoints.of(context).smallerOrEqualTo(BIG_DESKTOP) ? 4 : 5;
+                    int crossAxisCount = ResponsiveBreakpoints.of(context)
+                            .smallerOrEqualTo(TABLET)
+                        ? 2
+                        : ResponsiveBreakpoints.of(context)
+                                .smallerOrEqualTo(DESKTOP)
+                            ? 3
+                            : ResponsiveBreakpoints.of(context)
+                                    .smallerOrEqualTo(BIG_DESKTOP)
+                                ? 4
+                                : 5;
                     //Return a gridview builder of pokemons
                     return GridView.builder(
-                      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: crossAxisCount,
                         childAspectRatio: 200 / 160,
                       ),
-
-                      itemCount: pokemons.length + 1,
+                      itemCount: pokemons.length +
+                          (pokemons.length <= limitPage  &&
+                                  widget.searchText.isEmpty //No pagination when searching
+                              ? 1
+                              : 0),
                       itemBuilder: (context, index) {
-                        if(index == pokemons.length  > pokemons.length) {
-                          return const Center(child: CircularProgressIndicator(),);
+                        if(index == pokemons.length && limitPage > pokemons.length) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         }
                         return PokemonCard(
-                          pokemonWrapper: pokemons[index],
+                          pokemonWrapper: pokemons[index]!,
                         );
                       },
                     );
-                    return SingleChildScrollView(
-                      child: Wrap(
-                        children: [
-                          for (var pokemon in pokemons)
-                            PokemonCard(
-                              key: Key(pokemon.getPokemon().name ?? ""),
-                                pokemonWrapper: pokemon),
-                        ],
-                      ),
-                    );
+
                   } else {
                     return const Center(
                       child: Text('No hay pokemons capturados'),
@@ -92,50 +101,6 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
               ));
   }
 
- /* _buildList(){
-    return HiveList(
-      pokemonsFactory.box,
-
-      builder: (box) {
-        final pokemons = box.values.toList();
-        if(widget.searchText.isNotEmpty) {
-          pokemons.removeWhere((element) => !element.serializedPokemon.contains(widget.searchText));
-        }
-        if (pokemons.isNotEmpty) {
-          //Use Breakpoints to set crossAxisCount
-          int crossAxisCount = ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE) ? 2 : ResponsiveBreakpoints.of(context).smallerOrEqualTo(DESKTOP) ? 3 : 4;
-          //Return a gridview builder of pokemons
-          return GridView.builder(
-            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              childAspectRatio: 200 / 150,
-            ),
-            itemCount: pokemons.length,
-            itemBuilder: (context, index) {
-              return PokemonCard(
-                pokemonWrapper: pokemons[index],
-                key: UniqueKey()
-              );
-            },
-          );
-          return SingleChildScrollView(
-            child: Wrap(
-              children: [
-                for (var pokemon in pokemons)
-                  PokemonCard(
-                    key: Key(pokemon.getPokemon().name ?? ""),
-                      pokemonWrapper: pokemon),
-              ],
-            ),
-          );
-        } else {
-          return const Center(
-            child: Text('No hay pokemons capturados'),
-          );
-        }
-      },
-    );
-  }*/
   void _loadPokemons() async {
     setState(() {
       _isLoading = true;
