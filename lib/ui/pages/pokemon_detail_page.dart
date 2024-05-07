@@ -139,7 +139,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                  _isLoading ? CircularProgressIndicator() : TextButton(
-                      onPressed: onClickCaptureButton,
+                      onPressed: () => onClickCaptureButton(),
                       child: Text(_captured ? "Liberar" : "Capturar")),
                 ],
               )
@@ -157,13 +157,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     });
     if (_captured) {
       pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
-      showSnackbar(context, "Pokemon liberado");
+      showSnackbar(navigatorKey.currentContext!, "Pokemon liberado");
       setState(() {
         _captured = false;
       });
     } else {
       pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
-      showSnackbar(context, "Pokemon capturado");
+      showSnackbar(navigatorKey.currentContext!, "Pokemon capturado");
       setState(() {
         _captured = true;
       });

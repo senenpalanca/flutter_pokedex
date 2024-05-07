@@ -21,7 +21,6 @@ class _CapturedPokemonsListWidgetState
       child: HiveListener<dynamic>(
         box: pokemonsFactory.box,
         builder: (box) {
-          print("Building Hive List");
           final pokemons = box.values
               .toList()
               .where((element) => element.captured)
