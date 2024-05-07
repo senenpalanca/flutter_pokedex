@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/globals/globals.dart';
-import 'package:flutter_pokedex/common/models/pokemon_wrapper.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_card.dart';
 import 'package:hive_listener/hive_listener.dart';
-import 'package:pokeapi/model/pokemon/pokemon.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class CapturedPokemonsListWidget extends StatefulWidget {
@@ -40,24 +36,13 @@ class _CapturedPokemonsListWidgetState
                 crossAxisCount: crossAxisCount,
                 childAspectRatio: 200 / 170,
               ),
-              itemCount: pokemons.length +  (limitPage > pokemons.length ? 1 : 0),
+              itemCount: pokemons.length,
               itemBuilder: (context, index) {
-                if(index == pokemons.length && limitPage > pokemons.length) {
-                  return const Center(child: CircularProgressIndicator(),);
-                }
                 return PokemonCard(
                     pokemonWrapper: pokemons[index],
                 );
               },
             );
-            return SingleChildScrollView(
-                child: Wrap(
-                  children: [
-                    for (var pokemon in pokemons)
-                      PokemonCard(pokemonWrapper: pokemon),
-                  ],
-                ),
-              );
           } else {
             return const Center(
               child: Text('No hay pokemons capturados'),

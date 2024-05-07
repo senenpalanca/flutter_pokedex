@@ -98,6 +98,14 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
     }
   }
 
+  /// Returns if pokemon is captured
+  bool isPokemonCaptured(int id) {
+    PokemonWrapper? pokemon = box.get(id);
+    if (pokemon != null) {
+      return pokemon.captured;
+    }
+    return false;
+  }
   @override
   Future<void> checkCacheValidity() {
     // TODO: implement checkCacheValidity

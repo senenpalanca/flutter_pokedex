@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex/common/extensions/extensions.dart';
 import 'package:flutter_pokedex/common/globals/globals.dart';
@@ -24,21 +25,19 @@ class PokemonDetailPage extends StatefulWidget {
 }
 
 class _PokemonDetailPageState extends State<PokemonDetailPage> {
-  late bool _captured;
-  late bool _isLoading;
+  bool _captured = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
-    _captured = widget.pokemonArgs.captured;
+    _getCaptured();
     _isLoading = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-        body: _buildBody());
+    return Scaffold(body: _buildBody());
   }
 
   _buildBody() {
@@ -82,18 +81,17 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back),
-                      color: Colors.white,
-                    ),
-                  )
-                ),
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back),
+                        color: Colors.white,
+                      ),
+                    )),
                 //ID In bottom left
               ],
             ),
@@ -137,9 +135,14 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                     title: stat.stat?.name?.capitalize() ?? "",
                     value: "${stat.baseStat.toString()} puntos"),
 
-              TextButton(
-                  onPressed: onClickCaptureButton,
-                  child: Text(_captured ? "Liberar" : "Capturar"))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                 _isLoading ? CircularProgressIndicator() : TextButton(
+                      onPressed: onClickCaptureButton,
+                      child: Text(_captured ? "Liberar" : "Capturar")),
+                ],
+              )
             ],
           ),
         ),
@@ -147,7 +150,7 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     );
   }
 
-  onClickCaptureButton() {
+  onClickCaptureButton() async {
     if (_isLoading) return;
     setState(() {
       _isLoading = true;
@@ -165,6 +168,14 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
         _captured = true;
       });
     }
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  void _getCaptured() {
+    _captured =
+        pokemonsFactory.isPokemonCaptured(widget.pokemonArgs.pokemon.id!);
     setState(() {
       _isLoading = false;
     });
