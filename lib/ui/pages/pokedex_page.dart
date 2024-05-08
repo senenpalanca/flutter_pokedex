@@ -28,13 +28,13 @@ class _PokedexPageState extends State<PokedexPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Pokedex",
+              const Text("Pokédex",
                   style: TextStyle(
                       fontSize: Dimens.textSizeBigTitle,
                       fontWeight: FontWeight.bold,
                       color: AppColors.title)),
               const Text(
-                "Pokemons en la región de Kanto",
+                "Pokémons en la región de Kanto",
                 style: TextStyle(
                     fontSize: Dimens.textSizeBodySmall,
                     color: AppColors.subtitle),
@@ -47,7 +47,7 @@ class _PokedexPageState extends State<PokedexPage> {
                 child: TextFormField(
                   decoration: InputDecoration(
                     filled: true,
-                    hintText: "Buscar pokemon",
+                    hintText: "Buscar pokémon",
                     fillColor: Colors.grey[200],
                     suffixIcon: const Icon(Icons.search),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 20),

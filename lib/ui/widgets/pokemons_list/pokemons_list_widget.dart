@@ -58,7 +58,6 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
                         var pokemon = Pokemon.fromJson(jsonDecode(element!.serializedPokemon));
                         return pokemon.name!.contains(widget.searchText);
                       }).toList();
-                      //serializedPokemons = serializedPokemons.where((element) => element.name!.contains(widget.searchText)).toList();
                     }
                     //Use Breakpoints to set crossAxisCount
                     int crossAxisCount = ResponsiveBreakpoints.of(context)
@@ -78,7 +77,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
                         childAspectRatio: 200 / 160,
                       ),
                       itemCount: pokemons.length +
-                          (pokemons.length <= limitPage  &&
+                          (pokemons.length < limitPage  &&
                                   widget.searchText.isEmpty //No pagination when searching
                               ? 1
                               : 0),
@@ -96,7 +95,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
 
                   } else {
                     return const Center(
-                      child: Text('No hay pokemons capturados'),
+                      child: Text('No hay pokémons capturados'),
                     );
                   }
                 },

@@ -32,15 +32,7 @@ abstract class RouteServices {
     Routes.CAPTURED_POKEMON_PAGE: (context) => CapturedPage(),
   };
 
-  ///  add routing animation here!!
   static PageRoute onGenerateRoute(settings, context) {
-    /// Custom Route Animations for Custom Pages
-    // if (settings.name == "/someRoute") {
-    //   return PageRouteBuilder(
-    //       settings: settings, // Pass this to make popUntil(), pushNamedAndRemoveUntil(), works
-    //       pageBuilder: (_, __, ___) => Routes.routes[settings.name]!(context),
-    //       transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c));
-    // }
     return MaterialPageRoute(
         builder: (_) => RouteServices.routes[settings.name]!(context));
   }

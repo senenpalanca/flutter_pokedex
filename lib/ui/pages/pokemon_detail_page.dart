@@ -159,13 +159,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
     });
     if (_captured) {
       await pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
-      showSnackbar(navigatorKey.currentContext!, "Pokemon liberado");
+      showSnackbar(navigatorKey.currentContext!, "Pokémon liberado");
       setState(() {
         _captured = false;
       });
     } else {
       await pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
-      showSnackbar(navigatorKey.currentContext!, "Pokemon capturado");
+      showSnackbar(navigatorKey.currentContext!, "Pokémon capturado");
       setState(() {
         _captured = true;
       });

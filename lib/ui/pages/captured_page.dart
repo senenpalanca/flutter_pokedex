@@ -26,7 +26,7 @@ class _CapturedPageState extends State<CapturedPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Pokemons capturados",
+              const Text("Pokémons capturados",
                   style: TextStyle(
                       fontSize: Dimens.textSizeBigTitle,
                       fontWeight: FontWeight.bold,

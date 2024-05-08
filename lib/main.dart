@@ -39,7 +39,7 @@ class _FlutterPokedexState extends State<FlutterPokedex>
           return MaterialApp(
             title: 'Pokédex Code Challenge',
             theme: ThemeData(
-             primaryColor: state.color,
+             primaryColor: state.color ?? const Color(0XFFcc0000),
               useMaterial3: true,
             ),
             debugShowCheckedModeBanner: false,

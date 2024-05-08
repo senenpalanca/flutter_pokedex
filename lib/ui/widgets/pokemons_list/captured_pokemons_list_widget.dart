@@ -42,8 +42,6 @@ class _CapturedPokemonsListWidgetState
                 return pokemonA.name!.compareTo(pokemonB.name!);
             }); }
 
-            //serializedPokemons = serializedPokemons.where((element) => element.name!.contains(widget.searchText)).toList();
-
             //Use Breakpoints to set crossAxisCount
             int crossAxisCount = ResponsiveBreakpoints.of(context).smallerOrEqualTo(TABLET) ? 2 : ResponsiveBreakpoints.of(context).smallerOrEqualTo(DESKTOP) ? 3 : ResponsiveBreakpoints.of(context).smallerOrEqualTo(BIG_DESKTOP) ? 4 : 5;
 
@@ -61,7 +59,7 @@ class _CapturedPokemonsListWidgetState
             );
           } else {
             return const Center(
-              child: Text('No hay pokemons capturados'),
+              child: Text('No hay pokémons capturados'),
             );
           }
         },

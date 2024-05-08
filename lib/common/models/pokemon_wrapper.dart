@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
 part 'pokemon_wrapper.g.dart';
-
+/// Pokemon wrapper used to save serialized pokemons into hive
 @HiveType(typeId: 1)
 class PokemonWrapper {
 

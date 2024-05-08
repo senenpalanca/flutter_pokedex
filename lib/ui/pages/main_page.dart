@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
                   items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
                       icon: Icon(Icons.search),
-                      label: 'Pokedex',
+                      label: 'Pokédex',
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.pets),
