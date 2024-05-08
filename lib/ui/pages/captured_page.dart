@@ -14,11 +14,11 @@ class CapturedPage extends StatefulWidget {
 }
 
 class _CapturedPageState extends State<CapturedPage> {
-
+  bool orderAlphabetically = false;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
@@ -26,21 +26,35 @@ class _CapturedPageState extends State<CapturedPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               Text("Pokemons capturados",
+              const Text("Pokemons capturados",
                   style: TextStyle(
                       fontSize: Dimens.textSizeBigTitle,
                       fontWeight: FontWeight.bold,
                       color: AppColors.title)),
-               Text(
+              const Text(
                 "Sección del entrenador",
                 style: TextStyle(
                     fontSize: Dimens.textSizeBodySmall,
                     color: AppColors.subtitle),
               ),
-               SizedBox(
+              const SizedBox(
                 height: 12,
               ),
-               Expanded(child: CapturedPokemonsListWidget()),
+              ToggleButtons(
+                  onPressed: (index) {
+                    setState(() {
+                      orderAlphabetically = !orderAlphabetically;
+                    });
+                  },
+                  isSelected: [
+                orderAlphabetically
+              ], children: [
+                Icon(Icons.sort_by_alpha, size: 20),
+              ]),
+              Expanded(
+                  child: CapturedPokemonsListWidget(
+                orderAlphabetically: orderAlphabetically,
+              )),
             ],
           ),
         ),

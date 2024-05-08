@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter_pokedex/common/models/pokemon_wrapper.dart';
 import 'package:flutter_pokedex/common/services/pokemon_service.dart';
 import 'package:flutter_pokedex/common/services/service_locator.dart';
+import 'package:flutter_pokedex/common/utils/utils.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
 import 'factory_base.dart';
@@ -106,6 +108,24 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
     }
     return false;
   }
+
+  /// Returns the predominant color of the captured pokemons
+  Future<Color> getPredominantColor() async {
+    List<PokemonWrapper> pokemons = box.values.toList();
+    List<Color> colors = [];
+    for (var pokemon in pokemons) {
+      if (pokemon.captured) {
+        Pokemon p = Pokemon.fromJson(jsonDecode(pokemon.serializedPokemon));
+        colors.add(getColorType(p.types!.first.type!.name!)!);
+      }
+    }
+    if (colors.isEmpty) {
+      return Color(0XFFD3D3D3); //BOSTON UNIVERSITY RED COLOR
+    }
+    return mostCommonColor(colors);
+  }
+
+
   @override
   Future<void> checkCacheValidity() {
     // TODO: implement checkCacheValidity

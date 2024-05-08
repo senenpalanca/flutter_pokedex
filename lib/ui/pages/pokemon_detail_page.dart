@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokedex/common/bloc/colors_bloc.dart';
 import 'package:flutter_pokedex/common/extensions/extensions.dart';
 import 'package:flutter_pokedex/common/globals/globals.dart';
 import 'package:flutter_pokedex/common/styles/colors.dart';
@@ -156,18 +158,19 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
       _isLoading = true;
     });
     if (_captured) {
-      pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
+      await pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(navigatorKey.currentContext!, "Pokemon liberado");
       setState(() {
         _captured = false;
       });
     } else {
-      pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
+      await pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(navigatorKey.currentContext!, "Pokemon capturado");
       setState(() {
         _captured = true;
       });
     }
+    BlocProvider.of<ColorsBloc>(context, listen: false).add(ChangeColorEvent());
     setState(() {
       _isLoading = false;
     });

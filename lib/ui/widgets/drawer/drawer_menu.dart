@@ -14,7 +14,7 @@ class DrawerMenu extends StatelessWidget {
       children: <Widget>[
         DrawerHeader(
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Theme.of(context).primaryColor,
           ),
           margin: EdgeInsets.zero,
           padding: EdgeInsets.zero,

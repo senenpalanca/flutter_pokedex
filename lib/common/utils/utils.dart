@@ -66,6 +66,27 @@ Color? getColorType(String type) {
   }
 }
 
+/// Returns the most common color in a list of colors
+mostCommonColor(List<Color> colors){
+Map<Color, int> colorCount = {};
+  for (var color in colors) {
+    if (colorCount.containsKey(color)) {
+      colorCount[color] = colorCount[color]! + 1;
+    } else {
+      colorCount[color] = 1;
+    }
+  }
+  Color? mostCommonColor;
+  int maxCount = 0;
+  for (var entry in colorCount.entries) {
+    if (entry.value > maxCount) {
+      mostCommonColor = entry.key;
+      maxCount = entry.value;
+    }
+  }
+  return mostCommonColor;
+}
+
 initFactories() async {
   await Hive.initFlutter();
   await pokemonsFactory.init();

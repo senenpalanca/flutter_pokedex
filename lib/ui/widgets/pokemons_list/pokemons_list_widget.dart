@@ -48,15 +48,17 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
             : HiveListener<dynamic>(
                 box: pokemonsFactory.box,
                 builder: (box) {
-                  final pokemons = box.values.toList();
+                  var pokemons = box.values.toList();
 
                   if (pokemons.isNotEmpty) {
-                    var serializedPokemons = pokemons
-                        .map((e) => Pokemon.fromJson(jsonDecode(e!.serializedPokemon)))
-                        .toList();
+
 
                     if(widget.searchText.isNotEmpty) {
-                      serializedPokemons = serializedPokemons.where((element) => element.name!.contains(widget.searchText)).toList();
+                      pokemons = pokemons.where((element) {
+                        var pokemon = Pokemon.fromJson(jsonDecode(element!.serializedPokemon));
+                        return pokemon.name!.contains(widget.searchText);
+                      }).toList();
+                      //serializedPokemons = serializedPokemons.where((element) => element.name!.contains(widget.searchText)).toList();
                     }
                     //Use Breakpoints to set crossAxisCount
                     int crossAxisCount = ResponsiveBreakpoints.of(context)
