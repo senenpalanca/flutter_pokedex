@@ -136,13 +136,17 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
                 PokemonDetailItem(
                     title: stat.stat?.name?.capitalize() ?? "",
                     value: "${stat.baseStat.toString()} puntos"),
-
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                 _isLoading ? CircularProgressIndicator() : TextButton(
-                      onPressed: () => onClickCaptureButton(),
-                      child: Text(_captured ? "Liberar" : "Capturar")),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : TextButton(
+                          onPressed: () => onClickCaptureButton(),
+                          child: Text(_captured ? "Liberar" : "Capturar")),
                 ],
               )
             ],
@@ -158,13 +162,13 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
       _isLoading = true;
     });
     if (_captured) {
-      await pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
+      pokemonsFactory.releasePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(navigatorKey.currentContext!, "Pokémon liberado");
       setState(() {
         _captured = false;
       });
     } else {
-      await pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
+      pokemonsFactory.capturePokemon(widget.pokemonArgs.pokemon.id!);
       showSnackbar(navigatorKey.currentContext!, "Pokémon capturado");
       setState(() {
         _captured = true;
