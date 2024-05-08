@@ -120,7 +120,7 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
       }
     }
     if (colors.isEmpty) {
-      return Color(0XFFD3D3D3); //BOSTON UNIVERSITY RED COLOR
+      return Color(0XFFcc0000);
     }
     return mostCommonColor(colors);
   }
