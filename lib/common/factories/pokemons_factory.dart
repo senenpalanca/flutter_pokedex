@@ -110,7 +110,7 @@ class PokemonsFactory extends FactoryBase<PokemonWrapper> {
   }
 
   /// Returns the predominant color of the captured pokemons
-  Future<Color> getPredominantColor() async {
+  getPredominantColor() async {
     List<PokemonWrapper> pokemons = box.values.toList();
     List<Color> colors = [];
     for (var pokemon in pokemons) {

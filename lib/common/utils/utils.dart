@@ -66,9 +66,9 @@ Color? getColorType(String type) {
   }
 }
 
-/// Returns the most common color in a list of colors
-mostCommonColor(List<Color> colors){
-Map<Color, int> colorCount = {};
+Color? mostCommonColor(List<Color> colors) {
+  Map<Color, int> colorCount = {};
+
   for (var color in colors) {
     if (colorCount.containsKey(color)) {
       colorCount[color] = colorCount[color]! + 1;
@@ -76,16 +76,28 @@ Map<Color, int> colorCount = {};
       colorCount[color] = 1;
     }
   }
+
   Color? mostCommonColor;
   int maxCount = 0;
+  bool multipleMax = false;
+
   for (var entry in colorCount.entries) {
     if (entry.value > maxCount) {
       mostCommonColor = entry.key;
       maxCount = entry.value;
+      multipleMax = false;
+    } else if (entry.value == maxCount) {
+      multipleMax = true;
     }
   }
-  return mostCommonColor;
+
+  if (!multipleMax) {
+    return mostCommonColor;
+  } else {
+    return Color(0xffcc0000);
+  }
 }
+
 
 initFactories() async {
   await Hive.initFlutter();
