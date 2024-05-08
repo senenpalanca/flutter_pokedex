@@ -43,116 +43,119 @@ class _PokemonDetailPageState extends State<PokemonDetailPage> {
   }
 
   _buildBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              borderRadius:
-                  ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
-                      ? const BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        )
-                      : null,
-              color: getColorType(
-                      widget.pokemonArgs.pokemon.types?.first.type?.name ?? "")!
-                  .withOpacity(0.4)),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 160,
-                    height: 160,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.white.withOpacity(0.3),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius:
+                    ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
+                        ? const BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          )
+                        : null,
+                color: getColorType(
+                        widget.pokemonArgs.pokemon.types?.first.type?.name ??
+                            "")!
+                    .withOpacity(0.4)),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.white.withOpacity(0.3),
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.network(
-                    widget.pokemonArgs.pokemon.sprites?.frontDefault ?? "",
-                    width: 160,
-                    height: 160,
-                    fit: BoxFit.cover,
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image.network(
+                      widget.pokemonArgs.pokemon.sprites?.frontDefault ?? "",
+                      width: 160,
+                      height: 160,
+                      fit: BoxFit.cover,
+                    ),
                   ),
+                  Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.arrow_back),
+                          color: Colors.white,
+                        ),
+                      )),
+                  //ID In bottom left
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    "#${widget.pokemonArgs.pokemon.id} ${widget.pokemonArgs.pokemon.name?.capitalize()}",
+                    style: const TextStyle(
+                        fontSize: Dimens.textSizeBigTitle,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.title)),
+
+                Row(
+                  children: [
+                    for (var type in widget.pokemonArgs.pokemon.types!)
+                      PokemonTypeCard(
+                        type: type,
+                      )
+                  ],
                 ),
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back),
-                        color: Colors.white,
-                      ),
-                    )),
-                //ID In bottom left
+
+                const SizedBox(
+                  height: 12,
+                ),
+                PokemonDetailItem(
+                    title: "Altura",
+                    value:
+                        "${widget.pokemonArgs.pokemon.height.toString()} unidades"),
+                PokemonDetailItem(
+                    title: "Peso",
+                    value:
+                        "${widget.pokemonArgs.pokemon.weight.toString()} unidades"),
+                //All the properties of the pokemon
+                for (var stat in widget.pokemonArgs.pokemon.stats!)
+                  PokemonDetailItem(
+                      title: stat.stat?.name?.capitalize() ?? "",
+                      value: "${stat.baseStat.toString()} puntos"),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : TextButton(
+                            onPressed: () => onClickCaptureButton(),
+                            child: Text(_captured ? "Liberar" : "Capturar")),
+                  ],
+                )
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                  "#${widget.pokemonArgs.pokemon.id} ${widget.pokemonArgs.pokemon.name?.capitalize()}",
-                  style: const TextStyle(
-                      fontSize: Dimens.textSizeBigTitle,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.title)),
-
-              Row(
-                children: [
-                  for (var type in widget.pokemonArgs.pokemon.types!)
-                    PokemonTypeCard(
-                      type: type,
-                    )
-                ],
-              ),
-
-              const SizedBox(
-                height: 12,
-              ),
-              PokemonDetailItem(
-                  title: "Altura",
-                  value:
-                      "${widget.pokemonArgs.pokemon.height.toString()} unidades"),
-              PokemonDetailItem(
-                  title: "Peso",
-                  value:
-                      "${widget.pokemonArgs.pokemon.weight.toString()} unidades"),
-              //All the properties of the pokemon
-              for (var stat in widget.pokemonArgs.pokemon.stats!)
-                PokemonDetailItem(
-                    title: stat.stat?.name?.capitalize() ?? "",
-                    value: "${stat.baseStat.toString()} puntos"),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _isLoading
-                      ? CircularProgressIndicator()
-                      : TextButton(
-                          onPressed: () => onClickCaptureButton(),
-                          child: Text(_captured ? "Liberar" : "Capturar")),
-                ],
-              )
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
