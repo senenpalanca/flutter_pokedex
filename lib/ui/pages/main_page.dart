@@ -61,8 +61,8 @@ class _MainPageState extends State<MainPage> {
     return IndexedStack(
       index: _selectedTabIndex,
       children: const [
-         PokedexPage(),
-         CapturedPage(),
+        PokedexPage(),
+        CapturedPage(),
       ],
     );
   }

@@ -10,6 +10,7 @@ class PokemonService {
       return [];
     }
   }
+
   Future<List<Pokemon?>> getAllPokemons() async {
     try {
       List<Pokemon?> results = await PokeAPI.getObjectList<Pokemon>(1, 151);

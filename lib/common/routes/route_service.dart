@@ -4,12 +4,10 @@ import 'package:flutter_pokedex/ui/pages/main_page.dart';
 import 'package:flutter_pokedex/ui/pages/pokemon_detail_page.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
 
-
 ///
 /// define all of your application routes here!!
 ///
 abstract class Routes {
-
   static const INITIAL = '/initial';
   static const POKEMON_DETAIL_PAGE = '/pokemon_detail_page';
   static const CAPTURED_POKEMON_PAGE = '/captured_pokemon_page';
@@ -28,7 +26,9 @@ abstract class RouteServices {
   static Map<String, Widget Function(BuildContext context)> routes = {
     Routes.INITIAL: (context) => const MainPage(),
     //Create a detail page with arguments
-    Routes.POKEMON_DETAIL_PAGE: (context) => PokemonDetailPage(pokemonArgs: ModalRoute.of(context)!.settings.arguments as PokemonArguments),
+    Routes.POKEMON_DETAIL_PAGE: (context) => PokemonDetailPage(
+        pokemonArgs:
+            ModalRoute.of(context)!.settings.arguments as PokemonArguments),
     Routes.CAPTURED_POKEMON_PAGE: (context) => CapturedPage(),
   };
 

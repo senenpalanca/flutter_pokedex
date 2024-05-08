@@ -25,7 +25,7 @@ class PokemonTypeCard extends StatelessWidget {
         child: Text(
           type.type?.name ?? "",
           style: const TextStyle(
-              fontSize: Dimens.textSizeBodyTiny,
+              fontSize: 12,
               color: Colors.white),
         ),
       ),

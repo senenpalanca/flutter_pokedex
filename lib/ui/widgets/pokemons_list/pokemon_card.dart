@@ -30,7 +30,6 @@ class PokemonCard extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-                //height: 130,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -97,18 +96,18 @@ class PokemonCard extends StatelessWidget {
                 ),
               ),
             ),
-            if(ResponsiveBreakpoints.of(context).largerThan(MOBILE))
-            Positioned(
-              right: 20,
-              top: 10,
-              child:  Text(
-                "# ${pokemonWrapper.getPokemon().id.toString()}",
-                style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.white.withOpacity(0.3),
-                    fontWeight: Dimens.fontWeightBold),
-              ),
-            )
+            if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+              Positioned(
+                right: 20,
+                top: 10,
+                child: Text(
+                  "# ${pokemonWrapper.getPokemon().id.toString()}",
+                  style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.white.withOpacity(0.3),
+                      fontWeight: Dimens.fontWeightBold),
+                ),
+              )
           ],
         ),
       ),
