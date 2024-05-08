@@ -10,6 +10,7 @@ This is a Flutter challenge to create a Pokédex app using the [PokéAPI](https:
 4. Enjoy!
 
 ## Screenshots
+![image](https://github.com/senenpalanca/flutter_pokedex/assets/19634907/2ac0f789-4a61-490d-b9b1-ed7495e2d155)
 
 
 
