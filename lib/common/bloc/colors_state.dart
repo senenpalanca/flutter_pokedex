@@ -8,7 +8,7 @@ sealed class ColorsState {
 }
 
 final class ColorsInitial extends ColorsState {
-  const ColorsInitial() : super._();
+  const ColorsInitial() : super._(color: const Color(0xffcc0000));
 }
 
 final class ColorsChangedState extends ColorsState {

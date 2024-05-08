@@ -26,7 +26,6 @@ class _FlutterPokedexState extends State<FlutterPokedex>
 
   @override
   void initState() {
-    //BlocProvider.of<ColorsBloc>(context).add(ChangeColorEvent());
     super.initState();
   }
 
