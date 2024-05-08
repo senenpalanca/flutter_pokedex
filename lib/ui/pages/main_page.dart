@@ -36,15 +36,18 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar:
           ResponsiveBreakpoints.of(context).smallerOrEqualTo(MOBILE)
               ? BottomNavigationBar(
+            selectedItemColor:                    Theme.of(context).primaryColor,
+
                   currentIndex: _selectedTabIndex,
                   onTap: (index) {
                     setState(() {
                       _selectedTabIndex = index;
                     });
                   },
-                  items: const <BottomNavigationBarItem>[
+                  items:  <BottomNavigationBarItem>[
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.search),
+
+                      icon: Icon(Icons.search,),
                       label: 'Pokédex',
                     ),
                     BottomNavigationBarItem(
