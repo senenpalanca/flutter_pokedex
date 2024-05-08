@@ -74,7 +74,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
                     return GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: crossAxisCount,
-                        childAspectRatio: 200 / 160,
+                        childAspectRatio: 200 / 170,
                       ),
                       itemCount: pokemons.length +
                           (pokemons.length < limitPage  &&

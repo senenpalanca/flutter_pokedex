@@ -9,6 +9,7 @@ import 'package:flutter_pokedex/common/utils/utils.dart';
 import 'package:flutter_pokedex/ui/pages/pokemon_detail_page.dart';
 import 'package:flutter_pokedex/ui/widgets/pokemons_list/pokemon_type_card.dart';
 import 'package:pokeapi/model/pokemon/pokemon.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class PokemonCard extends StatelessWidget {
   final PokemonWrapper pokemonWrapper;
@@ -20,8 +21,8 @@ class PokemonCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 6.0),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-              context, Routes.POKEMON_DETAIL_PAGE, arguments: PokemonArguments(pokemonWrapper.getPokemon(), false));
+          Navigator.pushNamed(context, Routes.POKEMON_DETAIL_PAGE,
+              arguments: PokemonArguments(pokemonWrapper.getPokemon(), false));
         },
         customBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -33,8 +34,9 @@ class PokemonCard extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-
-                  color: getColorType(pokemonWrapper.getPokemon().types?.first.type?.name ?? "")!
+                  color: getColorType(
+                          pokemonWrapper.getPokemon().types?.first.type?.name ??
+                              "")!
                       .withAlpha(150),
                 ),
                 child: Padding(
@@ -46,15 +48,20 @@ class PokemonCard extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(pokemonWrapper.getPokemon().name?.capitalize() ?? "",
+                          Text(
+                              pokemonWrapper.getPokemon().name?.capitalize() ??
+                                  "",
                               style: const TextStyle(
                                   fontSize: Dimens.textSizeBody,
                                   color: Colors.white)),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              for (var type in pokemonWrapper.getPokemon().types!)
-                                PokemonTypeCard(type: type,)
+                              for (var type
+                                  in pokemonWrapper.getPokemon().types!)
+                                PokemonTypeCard(
+                                  type: type,
+                                )
                             ],
                           ),
                         ],
@@ -89,11 +96,22 @@ class PokemonCard extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            if(ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+            Positioned(
+              right: 20,
+              top: 10,
+              child:  Text(
+                "# ${pokemonWrapper.getPokemon().id.toString()}",
+                style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.white.withOpacity(0.3),
+                    fontWeight: Dimens.fontWeightBold),
+              ),
             )
           ],
         ),
       ),
     );
   }
-
 }
