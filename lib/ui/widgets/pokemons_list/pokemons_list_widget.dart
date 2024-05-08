@@ -95,7 +95,7 @@ class _PokemonsListWidgetState extends State<PokemonsListWidget> {
 
                   } else {
                     return const Center(
-                      child: Text('No hay pokémons capturados'),
+                      child: Text('No hay pokémons.'),
                     );
                   }
                 },
